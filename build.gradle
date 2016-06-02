@@ -167,7 +167,6 @@ doLast {
       logger.quiet("Passed Code Coverage Checks")
     }
   }
-}
 
 check.dependsOn jacocoTestReport
 
