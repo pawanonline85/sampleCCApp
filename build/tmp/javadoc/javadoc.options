@@ -1,0 +1,7 @@
+-classpath '/Users/smaggu/2junePawan/sampleCCApp/build/classes/main:/Users/smaggu/2junePawan/sampleCCApp/build/resources/main'
+-d '/Users/smaggu/2junePawan/sampleCCApp/build/docs/javadoc'
+-doctitle 'sampleCCApp 0.9 API'
+-quiet 
+-windowtitle 'sampleCCApp 0.9 API'
+'/Users/smaggu/2junePawan/sampleCCApp/src/main/java/st/extreme/math/BigFraction.java'
+'/Users/smaggu/2junePawan/sampleCCApp/src/main/java/st/extreme/math/package-info.java'

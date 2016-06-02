@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Implementation-Title: Fractions in Java
+Implementation-Version: 0.9
+Built-By: Otmar Humbel <ohumbel@gmail.com>
+Built-Date: Thu Jun 02 14:23:18 IST 2016
+Built-JDK: 1.8.0_73
+Built-Gradle: 2.0
+
