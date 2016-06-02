@@ -1,0 +1,115 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'signing'
+apply plugin: 'maven'
+apply plugin: 'jacoco'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}
+
+
+task sourcesJar(type: Jar) {
+    classifier 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+signing {
+    required { !version.contains('-SNAPSHOT') }
+    if (!project.hasProperty('signing.password')) {
+        return
+    }
+    sign configurations.archives
+}
+
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': projectName,
+                   'Implementation-Version': version,
+                   'Built-By': 'Otmar Humbel <ohumbel@gmail.com>',
+                   'Built-Date': new Date(),
+                   'Built-JDK': System.getProperty('java.version'),
+                   'Built-Gradle': gradle.gradleVersion
+    }
+}
+
+uploadArchives {
+    if (project.hasProperty('signing.password')) {
+        repositories.mavenDeployer {
+            beforeDeployment { 
+                MavenDeployment deployment -> signing.signPom(deployment)
+            }
+            repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2/') {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/') {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name projectName
+                packaging 'jar'
+                description 'Rational calculation with exact precision.'
+                url 'https://github.com/ohumbel/fractions'
+            
+                scm {
+                    connection 'scm:git:git@github.com:ohumbel/fractions.git'
+                    developerConnection 'scm:git:git@github.com:ohumbel/fractions.git'
+                    url 'git@github.com:ohumbel/fractions.git'
+                }
+
+    			licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+    			}
+
+                developers {[
+                    developer {
+                        id 'ohumbel'
+                        name 'Otmar Humbel'
+                        email 'ohumbel@gmail.com'
+                    },
+                    developer {
+                        id 'reinhapa'
+                        name 'Patrick Reinhart'
+                        email 'patrick@reini.net'
+                    }
+                ]}
+            }
+        }
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+
+check.dependsOn jacocoTestReport
+
+
+
