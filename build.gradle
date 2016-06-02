@@ -118,7 +118,6 @@ jacocoTestReport {
         xml.enabled = true
         html.enabled = true
     }
-}
 
 doLast {
     def report = file("${jacoco.reportsDir}/test/jacocoTestReport.xml")
@@ -166,6 +165,7 @@ doLast {
       logger.quiet("Passed Code Coverage Checks")
     }
   }
+}
 
 check.dependsOn jacocoTestReport
 
