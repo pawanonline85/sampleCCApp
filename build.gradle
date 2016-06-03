@@ -104,7 +104,7 @@ uploadArchives {
 
 ext {
   limits = [
-          'instruction': 93,
+          'instruction': 85,
           'branch'     : 88,
           'line'       : 91,
           'complexity' : 84,
