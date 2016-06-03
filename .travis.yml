@@ -5,27 +5,28 @@ jdk:
   - oraclejdk7
   - oraclejdk8
 
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "WkhPYmRIfi07TV5YBB8FJYZn9OPOWBizwzLmdu7UF+CuPbaZ3/0pis4twyID6T0lHT/PgF3+jjP0ioi65UNIv2Fz7mG1dPNaYeEiTNQvAG/gEHP0BE4z7SQq7fIDYmax5NB3M/9jwNKXgsmoPDDjEoYvPUhP1u8xSwe8GAe/ukGl/QHeUPWouj0tciq0GUY1PNB6DEa2l8WbLMJQ4HV9/cbp/+dYUyfwlSlUp2EYqGsjDPgePueVLrrpiTew5dWaMRFdqXgUuglEPn1cXysQdVTj8FFE5fFLRSFqApA5tDsks6pU8ESFtYnLcKFg8qU2uoSG/PCS+IFbFDELonF20OrsIlyUhx0Ob43f+cCNqbdLYdHKrozJJS1Yy2BfpRCRKLnU5ZeJOaZy2E/fxGOz+D35zq/rR0StcCVV6iTrFX2OzM/UrbAiH8CG7oAcqAjcd68L378uuAfsdRGyg6gWjKGpLY8FuItxFbe+Bc42ApGF0bD38SfNnT4eNV3lPaf3jjTnto3+O7ojaaZHWBIKhi8cuYIfBWVC8zxX0cGtGjzvOHObGfHS4lTpE0Mb/IdgiEmNeXwuHQnoxo0dV5nWDErg5JkcRTfJ6jh/Pr6nYQ9EgagjEinLNhn3ff5t839uu4UJaEYNAZx2lICNj/ILAEGSVUsYCj3YhDwjoPHB1MY="
+
+addons:
+  coverity_scan:
+    project:
+      name: "pawanonline85/sampleCCApp"
+      description: "Sample CC App"
+    notification_email: pawanonline85@gmail.com
+    build_command_prepend: "./gradlew assemble"
+    build_command:   "./gradlew check"
+    branch_pattern: coverity_scan
+
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
 cache:
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
-env:
-  global:
-   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
-   #   via the "travis encrypt" command using the project repo's public key
-   - secure: "DyISTdWEqtxTZtawPwAeWr70wJiid3Fye08FbTdSWcpTfJ4V27hdOoQgXY98K/wHNMTjM/aOXLwFF9z7u14KHZgynCt299uwOUc1mjjjzzFGCRr6a0G0JGVvRh3WTHti9xg2e05Rl2DJDbAiuMJVSzOt+O5mpGk7B8/60puWNNcJPdF/8fTLIkPAIO7wk2x/qlmRbZ1hnPTLa06VLeSr5A3FXP5aWq9EWeT0ZTgIvyI20SAs25AckW8mbxf39masomGVA12DOHdAlsWTBBeXUH/Hh7Cwh3UPNakO9FCRDmm8Eqx+/6+0hZF7drS2zBF+CaDgtnSqiNrq6Xlx7A9aKcAjRYOJjlrLxN2jXinzpT/n8Mdim3yMblSHDEMm2AOJlnXTIzMAAVT/ZDXHjUtCz7HPkZ8eYjwC6CwJo4PB8N9DITdQPWO6HcEUH7B67IvuCjyzV7iCownxGX0bMUS59bPn4DVb+ybHlRoHM+0HYJ9mwUJ8RJHVAbKbcwcAqdGtS7XDh4aASEb8TAvGfQQvnOW7f4sSpt1mXwxxte8XCibDA4/vMV6UiQbQep0BSBRSi490XDruGzB+/D02NNmhxnQnT7HSkML7CsMuYIH1YPAIvfveV9T+Yvqv9oY0MU4cSbbigGbdC5DkRoJCwlZFIl8RazFBF58FA0dKLMusqiU="
-
-addons:
-  coverity_scan:
-    project:
-      name: "pawanonline85/sampleCCApp"
-      description: "<Your project description here>"
-    notification_email: pawanonline85@gmail.com
-    build_command_prepend: "./gradlew assemble"
-    build_command:   "./gradlew check"
-    branch_pattern: coverity_scan
     
 after_success:
   - bash <(curl -s https://codecov.io/bash)
