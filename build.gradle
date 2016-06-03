@@ -149,7 +149,6 @@ doLast {
     def failures = []
     metrics.each {
       def limit = limits[it.key]
-      logger.quiet(""- ${it.key} coverage rate is: ${it.value}%")
       if (it.value < limit) {
         failures.add("- ${it.key} coverage rate is: ${it.value}%, minimum is ${limit}%")
       }
