@@ -19,7 +19,7 @@ addons:
     notification_email: pawanonline85@gmail.com
     build_command_prepend: "./gradlew assemble"
     build_command:   "./gradlew check"
-    branch_pattern: coverity_scan
+    branch_pattern: master
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
